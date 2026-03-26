@@ -1,0 +1,22 @@
+services:
+  ctr-truenas-zbx:
+    build: ${VOL_BUILD_CONTEXT}
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ${VOL_LOGS}
+      - ${VOL_TZ}
+      - ${VOL_LOCALTIME}
+    env_file:
+      - .env
+    networks:
+      network-share:
+        ipv4_address: ${IPV4_TRUENAS_ZBX}
+
+networks:
+  network-share:
+    external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}
